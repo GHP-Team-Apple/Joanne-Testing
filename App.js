@@ -5,11 +5,10 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import UserSeed from "./screens/UserSeed";
+import Seed from "./screens/Seed";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 
-// Need to fix after merge:
 import FriendsMap from "./move-to-client/move-to-components/FriendsMap";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +17,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="UserSeed" component={UserSeed} />
+        <Stack.Screen name="Seed" component={Seed} />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
@@ -30,13 +29,6 @@ export default function App() {
   );
 }
 
-{
-  /* <View style={styles.container}>
-<Text>Team Apple!</Text>
-<FriendsMap/>
-<StatusBar style="auto" />
-</View> */
-}
 
 const styles = StyleSheet.create({
   container: {
