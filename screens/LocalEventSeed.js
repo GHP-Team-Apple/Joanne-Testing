@@ -4,6 +4,7 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   doc,
   setDoc,
   addDoc,
@@ -50,19 +51,18 @@ const GetUsersAtlanta = async () => {
   return atlantaUsersArray;
 };
 
-// ----------------------------------------------- AddLocalEventsNYC
+// -------------------------------------------- AddLocalEventsNYC
 
-// Add a new document in collection "Users"
 export const AddLocalEventsNYC = async () => {
   const collectionRef = collection(db, "LocalEvents");
   const nycUsersArray = await GetUsersNYC();
 
   // i number of events created:
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 5; i++) {
     let localEventName = pickRandom(localEventNameArray);
     let isFree = pickRandom(isFreeArray);
     let start = randomDate(new Date(2022, 5, 1), new Date());
-    let end = start.setHours(start.getHours() + 2)
+    let end = start.setHours(start.getHours() + 2);
     let venueName;
     let venueAddress;
     let imgUrl;
@@ -75,6 +75,7 @@ export const AddLocalEventsNYC = async () => {
       Math.random() * (-73.73774318813449 - -74.00863280202847) +
       -74.00863280202847;
     let hostId = pickRandom(nycUsersArray);
+    // let hostId = "13ByjS5Rcc9MgJAv2ZZj"; // cody's user id
 
     const payload = {
       name: `${localEventName}`,
@@ -85,23 +86,24 @@ export const AddLocalEventsNYC = async () => {
       latitude: `${latitude}`,
       longitude: `${longitude}`,
       hostId: `${hostId}`,
+      city: "NYC",
     };
     await addDoc(collectionRef, payload);
   }
 };
 
-// ------------------------------------------------ AddLocalEventsAtlanta
+// --------------------------------------------- AddLocalEventsAtlanta
 
 export const AddLocalEventsAtlanta = async () => {
   const collectionRef = collection(db, "LocalEvents");
   const atlantaUsersArray = await GetUsersAtlanta();
 
   // i number of events created:
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 5; i++) {
     let localEventName = pickRandom(localEventNameArray);
     let isFree = pickRandom(isFreeArray);
     let start = randomDate(new Date(2012, 0, 1), new Date());
-    let end = start.setHours(start.getHours() + 2)
+    let end = start.setHours(start.getHours() + 2);
     let venueName;
     let venueAddress;
     let imgUrl;
@@ -124,6 +126,7 @@ export const AddLocalEventsAtlanta = async () => {
       latitude: `${latitude}`,
       longitude: `${longitude}`,
       hostId: `${hostId}`,
+      city: "Atl",
     };
     await addDoc(collectionRef, payload);
   }

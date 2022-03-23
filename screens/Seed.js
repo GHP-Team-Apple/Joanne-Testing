@@ -13,7 +13,7 @@ import { Button } from "react-native-web";
 
 import AddUsers from "./UserSeed";
 import { AddLocalEventsNYC, AddLocalEventsAtlanta } from "./LocalEventSeed";
-
+import { ConsoleLog } from "./consoleLog"
 
 
 function Seed() {
@@ -25,6 +25,8 @@ function Seed() {
       <Button title="Add NYC events" onPress={AddLocalEventsNYC} />
       <View style={styles.space} />
       <Button title="Add Atlanta events" onPress={AddLocalEventsAtlanta}/>
+      <View style={styles.space} />
+      <Button title="Console Log" onPress={ConsoleLog}/>
     </View>
   );
 }

@@ -1,4 +1,5 @@
 // rnfes
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -16,6 +17,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigation = useNavigation()
+
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        if (user) {
+          navigation.replace("Home")
+        }
+      })
+      // when you leave the login screen, you unsubscribe from listener
+      return unsubscribe
+    }, [])
 
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)

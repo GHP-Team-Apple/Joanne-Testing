@@ -29,17 +29,16 @@ function pickRandom(list) {
 
 // --------------------------------------------- Get Users function
 
-/*
 
-const GetUsers = async () => {
-    const usersCol = collection(db, 'Users');
-    const userSnapshot = await getDocs(usersCol);
-    const userList = userSnapshot.docs.map(doc => doc.data());
-    console.log(userList)
-    return userList;
-}
 
-*/
+// const GetUsers = async () => {
+//     const usersCol = collection(db, 'Users');
+//     const userSnapshot = await getDocs(usersCol);
+//     const userList = userSnapshot.docs.map(doc => doc.data());
+//     console.log(userList)
+//     return userList;
+// }
+
 
 // --------------------------------------------- Add Users function
 
@@ -48,20 +47,33 @@ const AddUsers = async () => {
   const collectionRef = collection(db, "Users");
 
   // First need to seed Cody because he is the admin:
-  // await addDoc(collectionRef, {
-  //   firstName: "Cody",
-  //   lastName: "Pug",
-  //   email: "cody@gh.com",
-  //   password: "123",
+  await addDoc(collectionRef, {
+    firstName: "Cody",
+    lastName: "Pug",
+    email: "cody@gh.com",
+    password: "123",
+    city: "NYC",
+    isAdmin: true,
+    isEighteen: true,
+    profilePicture: "dog.png",
+    username: "codypug",
+  });
+
+  // FOR UPDATING USERS:
+  // await setDoc(doc(db, "Users", "yIZEz2QZLTfQ5HefaFJuw2GUyws2"), {
+  //   firstName: "Loanne",
+  //   lastName: "Jee",
+  //   email: "loannejee@gh.com",
+  //   password: "123456",
   //   city: "NYC",
   //   isAdmin: true,
   //   isEighteen: true,
-  //   profilePicture: "dog.png",
-  //   username: "codypug",
+  //   profilePicture: "alpaca.png",
+  //   username: "loannejee",
   // });
 
   // i number of users created:
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 10; i++) {
     // Making random combination of numbers for username:
     let randomNums = "";
     for (let j = 0; j < 3; j++) {
