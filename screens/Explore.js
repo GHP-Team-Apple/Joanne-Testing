@@ -42,9 +42,7 @@ const Explore = () => {
 
     // map and pass props:
     let eventList = nycFriendsEventArray.map((event) => {
-      return (
-        <SingleEventRow key={event.id} event={event} />
-      );
+      return <SingleEventRow key={event.id} event={event} />;
     });
 
     // set new state for event list:

@@ -4,18 +4,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth } from "../firebase";
 
 const SingleUserRow = (props) => {
+  const attendee = props.attendee;
   const route = useRoute();
   const event = route.params.event;
 
-  const goToSingleUserView = () => {
-    navigation.navigate("SingleUserView", {
+  const goToUserProfile = () => {
+    navigation.navigate("UserProfile", {
       event: event,
+      attendee: attendee,
     });
   };
 
   return (
-    <TouchableOpacity style={styles.button} onPress={goToSingleUserView}>
-      <Text style={styles.buttonText}>Attendee #</Text>
+    <TouchableOpacity style={styles.button} onPress={goToUserProfile}>
+      <Text style={styles.buttonText}>{`${attendee.firstName} ${attendee.lastName}`}</Text>
     </TouchableOpacity>
   );
 };

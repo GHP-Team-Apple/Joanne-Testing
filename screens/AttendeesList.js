@@ -1,23 +1,21 @@
 import { useNavigation, useRoute } from "@react-navigation/core";
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { auth } from "../firebase";
 import SingleUserRow from "./SingleUserRow";
 
 const AttendeesList = () => {
-  const [attendeeList, setAttendeeList] = useState(<Text></Text>);
-  const navigation = useNavigation();
+  const route = useRoute();
+  const event = route.params.event;
+  const attendeeArray = route.params.attendeeArray;
 
-  const goToSingleUserView = () => {
-    navigation.navigate("SingleUserView");
-  };
-
-  // analogous to component did mount:
-  useEffect(() => {});
+  const attendeeList = attendeeArray.map((attendee) => {
+    return (<SingleUserRow key={attendee.id} attendee={attendee} />);
+  });
 
   return (
     <View style={styles.container}>
       <Text>AttendeesList</Text>
+      {attendeeList}
     </View>
   );
 };

@@ -1,16 +1,36 @@
 import { useNavigation, useRoute } from "@react-navigation/core";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { auth } from "../firebase";
+import { db } from "../firebase";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  addDoc,
+  query,
+  where,
+} from "firebase/firestore/lite";
 
 const SingleEventView = () => {
   const route = useRoute();
-  const event = route.params.event
+  const event = route.params.event;
   const navigation = useNavigation();
 
-  const goToAttendeesList = () => {
+  const goToAttendeesList = async () => {
+    const attendeeIdArray = event.attendees;
+    const attendeeArray = await Promise.all(
+      attendeeIdArray.map(async (attendeeId) => {
+        const docRef = doc(db, "Users", attendeeId);
+        const docSnap = await getDoc(docRef);
+        return { ...docSnap.data(), id: doc.id };
+      })
+    );
     navigation.navigate("AttendeesList", {
-        event: event
+      event: event,
+      attendeeArray: attendeeArray,
     });
   };
 
