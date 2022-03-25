@@ -109,7 +109,10 @@ export const AddLocalEventsNYC = async () => {
       venueName: venueName,
       venueAddress: venueAddress,
     };
-    await addDoc(collectionRef, payload);
+    const docRef = await addDoc(collectionRef, payload);
+    await setDoc(doc(db, "LocalEvents", docRef.id), {
+      eventId: docRef.id,
+    }, { merge: true });
   }
 };
 
@@ -153,6 +156,13 @@ export const AddLocalEventsAtlanta = async () => {
       venueName: venueName,
       venueAddress: venueAddress,
     };
-    await addDoc(collectionRef, payload);
+    const docRef = await addDoc(collectionRef, payload);
+    await setDoc(doc(db, "LocalEvents", docRef.id), {
+      eventId: docRef.id,
+    }, { merge: true });
   }
 };
+
+
+
+

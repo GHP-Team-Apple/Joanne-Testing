@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore/lite";
 import { auth } from "../firebase";
 import { async } from "@firebase/util";
-const axios = require('axios');
+const axios = require("axios");
 
 // --------------------------------------------- Event Info Arrays
 
@@ -79,28 +79,6 @@ const axios = require('axios');
 //   }
 // };
 
-// export const ConsoleLog = async () => {
-//   let altFriendsEventArray = [];
-//   const userId = auth.currentUser.uid;
-//   // get my user info:
-//   const docRef = doc(db, "Users", `${userId}`);
-//   const docSnap = await getDoc(docRef);
-//   const myUserInfo = docSnap.data();
-//   const friendsArray = myUserInfo.friends;
-//   console.log("LOLOLOL", friendsArray)
-//   // get events where my friends are hosts and also located in Atlanta:
-//   const q = query(collection(db, "LocalEvents"), where("city", "==", "Atl"));
-//   const querySnapshot = await getDocs(q); // [5 items]
-//   console.log(querySnapshot)
-//   querySnapshot.forEach((doc) => {
-//     if (friendsArray.includes(`${doc.data().hostId}`)) {
-//         console.log("PPP", doc.data(), doc.id)
-//         altFriendsEventArray.push({...doc.data(), id: doc.id});
-//     }
-//   });
-//   console.log(altFriendsEventArray);
-// };
-//
 // FOR UPDATING USERS WITHOUT OVERWRITING WHOLE DOCUMENT:
 // export const ConsoleLog = async () => {
 //   await setDoc(doc(db, "Users", "tGBFjYBpoZWCO9lyycynXwlVVza2"), {
@@ -116,7 +94,6 @@ const axios = require('axios');
 //     uid: "tGBFjYBpoZWCO9lyycynXwlVVza2",
 //   }, { merge: true });
 // }
-
 
 // Getting your followers:
 export const getFollowing = async (userId) => {
@@ -149,17 +126,32 @@ export const addRef = async (followUserId, myUserId) => {
   });
 };
 
-
 // export const ConsoleLog = async () => {
 //   addRef("WalEUjuIy6nEp2DvzVdd", "tGBFjYBpoZWCO9lyycynXwlVVza2");
 // };
 
+// export const ConsoleLog = async () => {
+//   try {
+//       const response = await axios.get(`https://api.thecatapi.com/v1/images/search`);
+//       console.log('CAT:', response.data[0].url);
+//       // return data.events;
+//   } catch (err) {
+//       console.log('error: ', err);
+//   }
+// }
+
+const getSingleEvent = async () => {
+  const docRef = doc(db, "LocalEvents", "qbLwtE3XCRWaohIyM42b");
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
+};
+
+const saveEvent = async (event, userId) => {
+  const eventsCollection = collection(db, "SavedEvents");
+  await addDoc(eventsCollection, { ...event, checkIn: false, userId: userId });
+};
+
 export const ConsoleLog = async () => {
-  try {
-      const response = await axios.get(`https://api.thecatapi.com/v1/images/search`);
-      console.log('CAT:', response.data[0].url);
-      // return data.events;
-  } catch (err) {
-      console.log('error: ', err);
-  }
-}
+  let event = await getSingleEvent();
+  saveEvent(event, "ihzddcHz7WSarDGk6kn3")
+};
