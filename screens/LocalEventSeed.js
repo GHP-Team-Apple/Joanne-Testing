@@ -11,6 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore/lite";
+const axios = require("axios");
 
 // --------------------------------------------- Event Info Arrays
 
@@ -23,11 +24,26 @@ function pickRandom(list) {
 }
 
 // random date:
-function randomDate(start, end) {
-  return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
+function setStart() {
+  const someDate = new Date(2022, 3, 25, 10, 45);
+  return someDate;
 }
+
+function setEnd() {
+  const someDate = new Date(2022, 3, 25, 18);
+  return someDate;
+}
+
+const getCat = async () => {
+  try {
+    const response = await axios.get(
+      `https://api.thecatapi.com/v1/images/search`
+    );
+    return response.data[0].url;
+  } catch (err) {
+    console.log("error: ", err);
+  }
+};
 
 // get users ids from NYC
 const GetUsersNYC = async () => {
@@ -61,11 +77,11 @@ export const AddLocalEventsNYC = async () => {
   for (let i = 0; i < 5; i++) {
     let localEventName = pickRandom(localEventNameArray);
     let isFree = pickRandom(isFreeArray);
-    let start = randomDate(new Date(2022, 5, 1), new Date());
-    let end = start.setHours(start.getHours() + 2);
-    let venueName;
-    let venueAddress;
-    let imgUrl;
+    let start = setStart();
+    let end = setEnd();
+    let venueName = 'Team Apple';
+    let venueAddress = '2201 Grace Hopper Ave'
+    let imageUrl = await getCat();
     let userIdArray;
     // For NYC - random coordinates
     let latitude =
@@ -78,15 +94,20 @@ export const AddLocalEventsNYC = async () => {
     // let hostId = "13ByjS5Rcc9MgJAv2ZZj"; // cody's user id
 
     const payload = {
-      name: `${localEventName}`,
+      name: localEventName,
       description: "Come join our event!",
-      start: `${start}`,
-      end: `${end}`,
-      isFree: `${isFree}`,
-      latitude: `${latitude}`,
-      longitude: `${longitude}`,
-      hostId: `${hostId}`,
+      start: start,
+      end: end,
+      isFree: isFree,
+      location: {
+        lat: latitude,
+        lon: longitude,
+      },
+      hostId: hostId,
       city: "NYC",
+      imageUrl: imageUrl,
+      venueName: venueName,
+      venueAddress: venueAddress,
     };
     await addDoc(collectionRef, payload);
   }
@@ -102,12 +123,11 @@ export const AddLocalEventsAtlanta = async () => {
   for (let i = 0; i < 5; i++) {
     let localEventName = pickRandom(localEventNameArray);
     let isFree = pickRandom(isFreeArray);
-    let start = randomDate(new Date(2012, 0, 1), new Date());
-    let end = start.setHours(start.getHours() + 2);
-    let venueName;
-    let venueAddress;
-    let imgUrl;
-    let userIdArray;
+    let start = setStart();
+    let end = setEnd();
+    let venueName = 'Team Apple';
+    let venueAddress = '2201 Grace Hopper Ave'
+    let imageUrl = await getCat();
     // For Atlanta - random coordinates
     let latitude =
       Math.random() * (33.87693603423371 - 33.67004820260162) +
@@ -118,15 +138,20 @@ export const AddLocalEventsAtlanta = async () => {
     let hostId = pickRandom(atlantaUsersArray);
 
     const payload = {
-      name: `${localEventName}`,
+      name: localEventName,
       description: "Come join our event!",
-      start: `${start}`,
-      end: `${end}`,
-      isFree: `${isFree}`,
-      latitude: `${latitude}`,
-      longitude: `${longitude}`,
-      hostId: `${hostId}`,
+      start: start,
+      end: end,
+      isFree: isFree,
+      location: {
+        lat: latitude,
+        lon: longitude,
+      },
+      hostId: hostId,
       city: "Atl",
+      imageUrl: imageUrl,
+      venueName: venueName,
+      venueAddress: venueAddress,
     };
     await addDoc(collectionRef, payload);
   }

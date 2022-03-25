@@ -12,6 +12,8 @@ import {
   where,
 } from "firebase/firestore/lite";
 import { auth } from "../firebase";
+import { async } from "@firebase/util";
+const axios = require('axios');
 
 // --------------------------------------------- Event Info Arrays
 
@@ -99,22 +101,65 @@ import { auth } from "../firebase";
 //   console.log(altFriendsEventArray);
 // };
 //
-// FOR UPDATING USERS:
-export const ConsoleLog = async () => {
-  await setDoc(doc(db, "Users", "tGBFjYBpoZWCO9lyycynXwlVVza2"), {
-    // firstName: "Loanne",
-    // lastName: "Jee",
-    // email: "loannejee@gh.com",
-    // password: "123456",
-    city: "NYC",
-    isAdmin: true,
-    isEighteen: true,
-    profilePicture: "alpaca.png",
-    // username: "loannejee",
+// FOR UPDATING USERS WITHOUT OVERWRITING WHOLE DOCUMENT:
+// export const ConsoleLog = async () => {
+//   await setDoc(doc(db, "Users", "tGBFjYBpoZWCO9lyycynXwlVVza2"), {
+//     firstName: "Loanne",
+//     lastName: "Jee",
+//     email: "loannejee@gh.com",
+//     // password: "123456",
+//     city: "NYC",
+//     // isAdmin: true,
+//     // isEighteen: true,
+//     // profilePicture: "alpaca.png",
+//     username: "loannejee",
+//     uid: "tGBFjYBpoZWCO9lyycynXwlVVza2",
+//   }, { merge: true });
+// }
+
+
+// Getting your followers:
+export const getFollowing = async (userId) => {
+  const followingCollection = collection(db, `Users/${userId}/following`);
+  const followingSnapshot = await getDocs(followingCollection);
+
+  return Promise.all(
+    followingSnapshot.docs.map(async (doc) => {
+      let following = { ...doc.data() };
+      if (following.userRef) {
+        let userData = await getDoc(following.userRef);
+        if (userData.exists()) {
+          return { ...userData.data(), uid: userData.id };
+        }
+      }
+    })
+  );
+};
+
+// export const addRef = async (followUserId, myUserId) => {
+//   await addDoc(collection(db, "Users", myUserId, "following"), {
+//     userRef: doc(db, "Users", followUserId),
+//   });
+// };
+
+// Adding userRef to people you're following:
+export const addRef = async (followUserId, myUserId) => {
+  await addDoc(collection(db, `Users/${myUserId}/following`), {
+    userRef: doc(db, "Users", followUserId),
   });
+};
+
+
+// export const ConsoleLog = async () => {
+//   addRef("WalEUjuIy6nEp2DvzVdd", "tGBFjYBpoZWCO9lyycynXwlVVza2");
+// };
+
+export const ConsoleLog = async () => {
+  try {
+      const response = await axios.get(`https://api.thecatapi.com/v1/images/search`);
+      console.log('CAT:', response.data[0].url);
+      // return data.events;
+  } catch (err) {
+      console.log('error: ', err);
+  }
 }
-  
-
-
-
-

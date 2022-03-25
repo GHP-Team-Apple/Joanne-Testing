@@ -20,8 +20,8 @@ function Seed() {
     
   return (
     <View style={styles.MainContainer}>
-      <Button title="Add users" onPress={AddUsers} />
-      <View style={styles.space} />
+      {/* <Button title="Add users" onPress={AddUsers} />
+      <View style={styles.space} /> */}
       <Button title="Add NYC events" onPress={AddLocalEventsNYC} />
       <View style={styles.space} />
       <Button title="Add Atlanta events" onPress={AddLocalEventsAtlanta}/>
