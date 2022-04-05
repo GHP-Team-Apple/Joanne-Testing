@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_KEY } from "@env";
+import { DUMMY_KEY } from "@env";
 
 const firebaseConfig = {
   apiKey: FIREBASE_KEY,
@@ -15,7 +16,7 @@ const firebaseConfig = {
 };
 
 // const firebaseConfig = {
-//   apiKey: "AIzaSyBHrA1B6WMTy3HqvKuxmEhj5em6A6q3pkg",
+//   apiKey: DUMMY_KEY,
 //   authDomain: "awesomeproject-e60aa.firebaseapp.com",
 //   projectId: "awesomeproject-e60aa",
 //   storageBucket: "awesomeproject-e60aa.appspot.com",
