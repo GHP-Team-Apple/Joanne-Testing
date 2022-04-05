@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import { auth } from "../firebase";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -27,9 +28,19 @@ const HomeScreen = () => {
     navigation.navigate("Notifications")
   };
 
+  const goToFilter = () => {
+    navigation.navigate("FilterTest");
+  };
+
   return (
     <View style={styles.container}>
+      
+      <Pressable onPress={goToFilter} >
+        <Ionicons name="options" size={28} />
+      </Pressable>
+
       <Text>Email: {auth.currentUser?.email}</Text>
+      
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>

@@ -15,6 +15,8 @@ import AttendeesList from "./screens/AttendeesList";
 import Notifications from "./screens/Notifications";
 import SingleUserView from "./screens/SingleUserView";
 import Explore from "./screens/Explore"
+// import FilterEvents from "./screens/FilterEvents";
+import FilterTest from "./screens/FilterTest";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Explore" component={Explore} />
         <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="SingleUserView" component={SingleUserView} />
+        <Stack.Screen name="FilterTest" component={FilterTest} />
       </Stack.Navigator>
     </NavigationContainer>
   );
